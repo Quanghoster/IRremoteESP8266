@@ -46,6 +46,14 @@
 #define FNV_PRIME_32 16777619UL
 #define FNV_BASIS_32 2166136261UL
 
+#define MAX2(a, b) ((a > b)?(a):(b))
+#define MAX4(a, b, c, d) MAX2(MAX2(a, b), MAX2(c, d))
+#define STATE_SIZE_MAX MAX2(MAX4(ARGO_COMMAND_LENGTH, \
+                                 TROTEC_COMMAND_LENGTH, \
+                                 MITSUBISHI_AC_STATE_LENGTH, \
+                                 KELVINATOR_STATE_LENGTH), \
+                            MAX2(GREE_STATE_LENGTH, DAIKIN_COMMAND_LENGTH))
+
 // Types
 // information for the interrupt handler
 typedef struct {
@@ -82,6 +90,7 @@ class decode_results {
   bool repeat;  // Is the result a repeat code?
   uint32_t address;  // Decoded device address.
   uint32_t command;  // Decoded command.
+  uint8_t state[STATE_SIZE_MAX];  // Complex multi-word results. Typically A/Cs.
 };
 
 // main class for receiving IR
@@ -201,6 +210,11 @@ class IRrecv {
 #if DECODE_NIKAI
   bool decodeNikai(decode_results *results, uint16_t nbits = NIKAI_BITS,
                    bool strict = true);
+#endif
+#if DECODE_KELVINATOR
+  bool decodeKelvinator(decode_results *results,
+                        uint16_t nbits = KELVINATOR_BITS,
+                        bool strict = true);
 #endif
 };
 

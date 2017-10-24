@@ -102,7 +102,7 @@
 #define DECODE_DENON         true
 #define SEND_DENON           true
 
-#define DECODE_KELVINATOR    false  // Not written.
+#define DECODE_KELVINATOR    true
 #define SEND_KELVINATOR      true
 
 #define DECODE_MITSUBISHI_AC false  // Not written.
@@ -191,6 +191,7 @@ enum decode_type_t {
 #define GREE_BITS                   (GREE_STATE_LENGTH * 8)
 #define JVC_BITS                    16U
 #define KELVINATOR_STATE_LENGTH     16U
+#define KELVINATOR_BITS             (KELVINATOR_STATE_LENGTH * 8)
 #define LG_BITS                     28U
 #define LG32_BITS                   32U
 #define MITSUBISHI_BITS             16U
